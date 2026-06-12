@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Flipkart Test Suite" verbose="1">
+    <test name="Home Page Tests">
+        <classes>
+            <class name="com.qaproject.tests.HomePageTest"/>
+        </classes>
+    </test>
+    <test name="Search Tests">
+        <classes>
+            <class name="com.qaproject.tests.SearchTest"/>
+        </classes>
+    </test>
+    <test name="Cart Tests">
+        <classes>
+            <class name="com.qaproject.tests.CartTest"/>
+        </classes>
+    </test>
+</suite>

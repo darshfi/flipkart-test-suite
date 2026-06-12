@@ -12,14 +12,15 @@ import org.testng.annotations.Test;
 
 public class HomePageTest extends BaseTest {
     private HomePage homePage;
-
+    // initialize/load the HTML file
     @BeforeTest
     public void initPage(){
         ExtentReportManager.getInstance();
     }
-
+    // test if on home page using the title
     @Test(priority = 1)
     public void testHomePageTitle(){
+        //create the test
         ExtentTest extentTest = ExtentReportManager.getInstance()
                 .createTest("Home Page Title Test");
         ExtentReportManager.setTest(extentTest);
@@ -35,7 +36,7 @@ public class HomePageTest extends BaseTest {
             throw e;
         }
     }
-
+    // see if the search box has loaded up properly
     @Test(priority = 2)
     public void testSearchBoxVisible(){
         ExtentTest extentTest = ExtentReportManager.getInstance()
@@ -51,7 +52,7 @@ public class HomePageTest extends BaseTest {
             throw e;
         }
     }
-
+    // check if the search box is working
     @Test(priority = 3)
     public void testSearchNavigation(){
         ExtentTest extentTest = ExtentReportManager.getInstance()
@@ -69,7 +70,7 @@ public class HomePageTest extends BaseTest {
             throw e;
         }
     }
-
+    // send/write everything in the HTML file
     @AfterClass
     public void tearDownReport(){
         ExtentReportManager.flush();
