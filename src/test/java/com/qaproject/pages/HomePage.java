@@ -1,5 +1,6 @@
 package com.qaproject.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,19 +18,21 @@ public class HomePage {
     @FindBy(css = "img[alt='Chevron']")
     private WebElement chevronImage;
 
-    @FindBy(css = "img[alt='cart']")
+    @FindBy(xpath = "//a[contains(@href, 'viewcart')]")
     private WebElement cartIcon;
 
     public HomePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-    //use and test the different elements
-    public void searchFor(String keyword){
+
+    public void searchFor(String keyword) {
         searchBox.clear();
         searchBox.sendKeys(keyword);
-        searchButton.click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", searchButton);
     }
+
 
     public boolean isSearchBoxVisible(){
         return searchBox.isDisplayed();
@@ -39,8 +42,9 @@ public class HomePage {
         chevronImage.click();
     }
 
-    public void clickCart(){
-        cartIcon.click();
+    public void clickCart() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", cartIcon);
     }
 
     public String getTitle(){

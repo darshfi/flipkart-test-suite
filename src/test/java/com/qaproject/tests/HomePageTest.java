@@ -5,10 +5,14 @@ import com.aventstack.extentreports.Status;
 import com.qaproject.pages.HomePage;
 import com.qaproject.utils.BaseTest;
 import com.qaproject.utils.ExtentReportManager;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class HomePageTest extends BaseTest {
     private HomePage homePage;
@@ -19,20 +23,20 @@ public class HomePageTest extends BaseTest {
     }
     // test if on home page using the title
     @Test(priority = 1)
-    public void testHomePageTitle(){
-        //create the test
+    public void testHomePageTitle() {
         ExtentTest extentTest = ExtentReportManager.getInstance()
                 .createTest("Home Page Title Test");
         ExtentReportManager.setTest(extentTest);
-        try{
-            homePage = new HomePage(driver);
-            String title = homePage.getTitle();
+        try {
+            String title = driver.getTitle();
             extentTest.log(Status.INFO, "Page Title: " + title);
-            Assert.assertTrue(title.contains("Flipkart"),
-                    "Title should contain 'Flipkart'");
-            extentTest.log(Status.PASS,"Home Page title verified successfully");
-        } catch(Exception e){
-            extentTest.log(Status.FAIL,"Test failed: " + e.getMessage());
+            // Title no longer contains "Flipkart" — check for actual content
+            Assert.assertFalse(title.isEmpty(), "Page title should not be empty");
+            Assert.assertTrue(title.contains("Online Shopping") || title.contains("Flipkart"),
+                    "Title should indicate Flipkart homepage. Actual: " + title);
+            extentTest.log(Status.PASS, "Home Page title verified: " + title);
+        } catch (Exception e) {
+            extentTest.log(Status.FAIL, "Test failed: " + e.getMessage());
             throw e;
         }
     }
@@ -70,7 +74,7 @@ public class HomePageTest extends BaseTest {
             throw e;
         }
     }
-    // send/write everything in the HTML file
+
     @AfterClass
     public void tearDownReport(){
         ExtentReportManager.flush();

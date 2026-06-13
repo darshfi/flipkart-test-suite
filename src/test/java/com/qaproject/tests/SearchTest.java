@@ -51,21 +51,24 @@ public class SearchTest extends BaseTest{
     }
 
     @Test(priority = 3)
-    public void testEmptySearchStaysOnHomePage(){
+    public void testEmptySearchStaysOnHomePage() {
         ExtentTest extentTest = ExtentReportManager.getInstance()
                 .createTest("Empty Search Test");
         ExtentReportManager.setTest(extentTest);
-        try{
+        try {
             homePage = new HomePage(driver);
             homePage.searchFor("");
-            extentTest.log(Status.INFO,"Searched with empty string");
-            String title = driver.getTitle();
-            extentTest.log(Status.INFO,"Page title after empty search: " + title);
-            Assert.assertTrue(title.contains("Flipkart"),
-                    "Should remain on Flipkart after empty search");
-            extentTest.log(Status.PASS,"Empty search handled correctly");
-        } catch(Exception e){
-            extentTest.log(Status.FAIL,"Test failed: " + e.getMessage());
+            extentTest.log(Status.INFO, "Searched with empty string");
+            // Check URL instead of title — URL is more reliable
+            String currentUrl = driver.getCurrentUrl();
+            extentTest.log(Status.INFO, "URL after empty search: " + currentUrl);
+            Assert.assertTrue(
+                    currentUrl.contains("flipkart.com") && !currentUrl.contains("search"),
+                    "Should remain on Flipkart homepage after empty search. URL: " + currentUrl
+            );
+            extentTest.log(Status.PASS, "Empty search handled correctly");
+        } catch (Exception e) {
+            extentTest.log(Status.FAIL, "Test failed: " + e.getMessage());
             throw e;
         }
     }
